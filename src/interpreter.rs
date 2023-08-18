@@ -1,6 +1,6 @@
 use std::process;
 
-use crate::{ast::{Node, NodeKind}, tokens::TokenKind};
+use crate::ast::{Node, NodeKind};
 
 pub struct Interpreter {
     input_nodes: Vec<Node>,
@@ -12,7 +12,7 @@ impl Interpreter {
     pub fn new(input_nodes: Vec<Node>) -> Self {
         Self {
             input_nodes_len: input_nodes.len(),
-            input_nodes: input_nodes,
+            input_nodes,
             current_node_index: 0,
         }
     }
@@ -81,6 +81,23 @@ impl Interpreter {
                     }
                 }
 
+                "println" => {
+                    for arg in args.iter() {
+                        let arg = arg.clone();
+                        match arg.kind {
+                            NodeKind::String(string) => {
+                                println!("{}", string);
+                            }
+                            
+                            NodeKind::Number(num) => {
+                                println!("{}", num);
+                            }
+
+                            NodeKind::Func(_, _) => unreachable!(),
+                        }
+                    }
+                }
+
                 "add" => {
                     if args.len() != 2 {
                         // dbg!(&args);
@@ -94,16 +111,12 @@ impl Interpreter {
                     }
 
                     let operand1 = if let NodeKind::Number(operand1) = args[0].kind { operand1 } else {
-                        self.throw_err(format!(
-                            "Expected type NodeKind::Number"
-                        ));
+                        self.throw_err("Expected type NodeKind::Number".to_string());
                         0.
                     };
 
                     let operand2 = if let NodeKind::Number(operand1) = args[1].kind { operand1 } else {
-                        self.throw_err(format!(
-                            "Expected type NodeKind::Number"
-                        ));
+                        self.throw_err("Expected type NodeKind::Number".to_string());
                         0.
                     };
 

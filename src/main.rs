@@ -12,7 +12,7 @@ use crate::{lexer::Lexer, parser::Parser, interpreter::Interpreter};
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 1 {
+    if args.is_empty() {
         println!("[Usage]");
         println!("{} <input_file>", args[0]);
     }
@@ -37,7 +37,7 @@ fn main() {
             println!("[Error]");
             println!("Could not open file '{}'\n", file_name);
             println!("[Reason]");
-            println!("{}", err.to_string());
+            println!("{}", err);
         }
     }
 }

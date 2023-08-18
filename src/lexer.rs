@@ -28,7 +28,7 @@ impl Lexer {
 
             current_char_index: 0,
 
-            file_name: file_name,
+            file_name,
         }
     }
 

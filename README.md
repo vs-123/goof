@@ -8,8 +8,9 @@ A very dumb scripting language
 
 ## Example
 ```
-print("hello")
-assign("someone's age", 5)
+println("Hello World")
+print("2 + 3 = ")
+println(add(2, 3))
 ```
 
 ## Warning

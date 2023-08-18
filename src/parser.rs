@@ -16,7 +16,7 @@ impl Parser {
         Self {
             output_nodes: Vec::new(),
             input_tokens_len: input_tokens.len(),
-            input_tokens: input_tokens,
+            input_tokens,
             current_token_index: 0,
         }
     }
@@ -87,7 +87,7 @@ impl Parser {
 
         self.output_nodes.push(Node {
             kind: NodeKind::Func(name, args),
-            location: location,
+            location,
         })
     }
 
@@ -139,7 +139,7 @@ impl Parser {
 
         Node {
             kind: NodeKind::Func(name, args),
-            location: location,
+            location,
         }
     }
 
@@ -153,7 +153,7 @@ impl Parser {
         }
     }
 
-    fn expect_one_of<'a>(&self, expected_kinds: &'a [TokenKind]) {
+    fn expect_one_of(&self, expected_kinds: &[TokenKind]) {
         let next_token = self.peek();
         if !expected_kinds.contains(&next_token.kind) {
             self.throw_err(format!(
