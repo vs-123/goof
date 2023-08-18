@@ -1,0 +1,64 @@
+Goof
+
+```
+print(add(1, 2))
+```
+
+Tokens:-
+print -> Ident
+(     -> OParen
+add   -> Ident
+(     -> OParen
+1     -> Number
+,     -> Comma
+2     -> Number
+)     -> CParen
+)     -> CParen
+
+AST:-
+[
+    {
+        kind: Func,
+        value: "print",
+        args: [
+            {
+                kind: Func,
+                value: "add",
+                args: [{kind: Number, value: 1}, {kind: Number, value: 2}]
+            }
+        ]
+    }
+]
+
+
+FUNC eat_func
+    USING args: Vec<ASTToken>, name: String
+    EXPECT_NEXT OParen
+    NEXT
+
+    WHILE token.true:
+        MATCH token.kind:
+            Ident => eat_func
+            Number, String => args.push(token.value)
+    
+    output_ast.push(
+        {
+            kind: Func,
+            value: name,
+            args: args,
+        }
+    )
+
+Errors
+
+[Error]
+Variable 'XYZ' not defined.
+
+[Where?]
+In file ABC/DEF, at line 12, column 25
+(Caused by function 'call')
+
+[Code]
+    |
+ 12 | add(call("XYZ"))
+    |
