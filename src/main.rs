@@ -12,9 +12,10 @@ use crate::{lexer::Lexer, parser::Parser, interpreter::Interpreter};
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.is_empty() {
+    if args.len() < 2 {
         println!("[Usage]");
         println!("{} <input_file>", args[0]);
+        return;
     }
 
     let file_name = args[1].clone();
